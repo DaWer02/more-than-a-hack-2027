@@ -10,6 +10,47 @@ question to answer with it.
 
 ---
 
+## Team `Mama Doain Aku Sukses Ya` — Submission Reproduction Guide
+
+This repository contains the complete, deterministic, zero-training-on-match pipeline for **Team `Mama Doain Aku Sukses Ya`**. All deliverables are generated directly from the provided tactical match bundle (`data/tactical/`).
+
+### 1. Environment & Pinned Dependencies
+Tested on **Python 3.12.13**. Install the exact pinned pipeline dependencies (the evaluator-only `requirements.txt` remains untouched):
+
+```bash
+python -m venv .venv
+# Windows PowerShell:
+.\.venv\Scripts\Activate.ps1
+# Linux/macOS:
+# source .venv/bin/activate
+
+pip install -r requirements-pipeline.txt
+```
+
+### 2. Regenerate the Exact Submission File
+Ensure the official match assets are unpacked into `./data` (or set `MTAH_DATA_DIR`). Then run:
+
+```bash
+python run.py --config configs/final.yaml
+```
+
+This single command:
+1. Executes classical ROI Morphological Top-Hat CV ball recovery on active occluded segments, 2D Kalman Filter + RTS backward smoothing per half, physics-based Dead-Ball scoring, Controlled Possession modeling (`dwell = 25 frames`), and per-half 3-State HMM Viterbi decoding (`P_stay = 0.996`, `smoothing_window = 60`).
+2. Writes and validates the 199,319-row submission file at `outputs/Mama_Doain_Aku_Sukses_Ya.csv` (and mirrors it to `evaluation/results/Mama_Doain_Aku_Sukses_Ya.csv`), deterministic SHA-256: `59f0cff74f3fa39df74c9bae3f724c9d9ef3d4dc8f3ebdb695e0d9ba6190a914`.
+3. Generates local Data Storytelling analytics reports (`outputs/Mama_Doain_Aku_Sukses_Ya_storytelling.{md,png,pdf}`) unless `--no-report` is passed. Use `--force-recompute` to bypass Parquet caches under `cache/tactical/`.
+
+### 3. Validate Format, Public Sanity Check & Unit Tests
+
+```bash
+python evaluation/validate_submission.py outputs/Mama_Doain_Aku_Sukses_Ya.csv
+python evaluation/run_evaluation.py
+pytest
+```
+
+> **Rule Compliance:** All outputs are generated algorithmically from physics/geometry priors without human labels or training/tuning on `BAR-ATH`. Match data (`data/`), local caches (`cache/`), generated binary/CSV outputs (`outputs/*.csv`, `*.pdf`, `*.png`), and exploration scripts remain excluded from git via `.gitignore`. See [`outputs/Mama_Doain_Aku_Sukses_Ya.md`](outputs/Mama_Doain_Aku_Sukses_Ya.md) for the full technical report.
+
+---
+
 ## The task
 
 **For every frame of the match, say who has the ball.**

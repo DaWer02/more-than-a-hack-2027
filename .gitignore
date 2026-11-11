@@ -32,6 +32,22 @@ evaluation/scoreboard.csv
 data/*
 !data/README.md
 
+# -- derived local caches, local models, scratch scripts and pipeline outputs --
+cache/
+scratch/
+outputs/*
+!outputs/Mama_Doain_Aku_Sukses_Ya.md
+!outputs/ablation_results.md
+models/
+*.parquet
+*.feather
+*.npy
+*.npz
+*.pkl
+*.pt
+*.pth
+*.onnx
+
 *.mp4
 *.gzip
 *.pl3container

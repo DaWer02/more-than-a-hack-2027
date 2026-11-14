@@ -17,11 +17,8 @@ possession_by_frame.pkl
 # -- submissions -------------------------------------------------------------------------------
 # Any file in results/ is a set of labels for the whole match. A perfect one is a copy of the
 # ground truth, so the folder ships empty and stays that way.
-evaluation/results/*.csv
-
-# ...with one deliberate exception. The baselines are computed from the ATD alone -- the same ATD
-# every enrolled participant has -- and never read a ground truth of any kind, so they carry no
-# information about the answer. They ship so that a fresh clone has something real to score.
+evaluation/results/*
+!evaluation/results/README.md
 !evaluation/results/baseline_*.csv
 evaluation/reports/
 evaluation/scoreboard.csv
@@ -51,6 +48,13 @@ models/
 *.mp4
 *.gzip
 *.pl3container
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.7z
+*.rar
+*.bin
 
 # -- internal documents ---------------------------------------------------------------------------
 # OVERVIEW.md -- the institutional description of the competition -- IS committed. It is the only
@@ -69,12 +73,22 @@ models/
 # insurance against it being recreated in here by habit.
 organizers/
 
-# -- editors and build artifacts ---------------------------------------------------------------
+# -- editors, test caches and build artifacts --------------------------------------------------
 .idea/
 .vscode/
+*.swp
+*.swo
+*~
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.ipynb_checkpoints/
 __pycache__/
 *.py[cod]
 .venv/
 venv/
 env/
 .DS_Store
+Thumbs.db
+Desktop.ini
